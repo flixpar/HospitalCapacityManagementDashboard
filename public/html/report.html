@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Hospital Capacity Management Dashboard</title>
+
+	<link rel="stylesheet" href="https://unpkg.com/bulma@0.9.1/css/bulma.min.css">
+
+	<link rel="stylesheet" href="/css/nav.css">
+	<link rel="stylesheet" href="/css/patients.css">
+	<link rel="stylesheet" href="/css/report.css">
+
+	<script src="/js/menu.js"></script>
+</head>
+
+<body>
+
+	<nav class="navbar" role="navigation" aria-label="main navigation">
+		<div class="navbar-brand">
+			<a href="/" class="navbar-item">Hospital Capacity Management Dashboard</a>
+			<a role="button" class="navbar-burger" data-target="navbar-menu" aria-label="menu" aria-expanded="false">
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
+			</a>
+		</div>
+
+		<div id="navbar-menu" class="navbar-menu">
+			<div id="navbar-main" class="navbar-start">
+				<a href="/data" class="navbar-item is-tab">Data</a>
+				<a href="/recommendations" class="navbar-item is-tab">Decision Recommendation</a>
+				<a href="/report" class="navbar-item is-tab">Status Report</a>
+				<div class="navbar-item has-dropdown is-hoverable">
+					<a href="/method" class="navbar-link">About</a>
+					<div class="navbar-dropdown">
+						<a href="/method" class="navbar-item">Method</a>
+						<a href="/about" class="navbar-item">About Us</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<section class="section">
+
+		<div class="container">
+			<h1 class="title">Hospital Capacity Management Dashboard - Status Report</h1>
+		</div>
+
+		<div class="container" id="results-container">
+			<div id="progressbar-area" class="column is-10 is-offset-1">
+				<div class="notification">
+					Updating...
+					<br>
+					Note: This site solves the optimization model in real time on our server, so you may have to wait briefly while it returns an answer.
+				</div>
+				<progress class="progress is-small is-info" max="100"></progress>
+			</div>
+			<div id="error-area" class="column is-10 is-offset-1 is-hidden">
+				<div class="notification is-danger">Error</div>
+			</div>
+		</div>
+
+		<div class="container" id="report-container">
+
+			<div class="content">
+				<h3 class="title is-3">Overview</h3>
+				<p>Patient transfers can help to reduce the required surge capacity and to balance load more evenly in healthcare systems facing stress from COVID-19. We have developed a model to determine optimal transfers so that hospital systems can reduce the surge capacity that they must create or balance load as evenly as possible, while also incorporating operational constraints and costs (for more details see our <a href="https://arxiv.org/abs/2403.15738">paper</a>). We have applied this model to the Johns Hopkins Health System using the admissions forcast developed by Eili Klein. This document is a summary report of our current findings. <b>Note: this version of the report is preliminary.</b>
+				</p>
+			</div>
+
+			<div class="content">
+				<h3 class="title is-3">Parameters</h3>
+				<p>In this analysis we use the latest long-term forecast and we consider the <span class="fillvalue">SCENARIO</span> scenario. We also use the following parameters:</p>
+				<ul>
+					<li>Operational occupancy: <span class="fillvalue">OPERATIONALOCCUPANCY</span></li>
+					<li>Maximum ICU transfers per day: <span class="fillvalue">TRANSFERBUDGET-ICU</span> COVID ICU patients</li>
+					<li>Maximum acute transfers per day: <span class="fillvalue">TRANSFERBUDGET-ACUTE</span> COVID acute patients</li>
+					<li>Surge capacity preference: All hospitals equal</li>
+				</ul>
+			</div>
+
+			<div class="content">
+				<h3 class="title is-3">Summary</h3>
+				<p>Our model suggests that optimal COVID patient transfers can reduce surge capacity needs in ICUs by <span class="fillvalue">SURGEREDUCTION-ICU</span> from <span class="fillvalue">SURGE-NOTRANSFERS-ICU</span> bed days to <span class="fillvalue">SURGE-TRANSFERS-ICU</span> bed days from <span class="fillvalue">TIMEPERIOD</span>. The figures below show the optimal surge timeline for each hospital in the system and the optimal transfer amounts.</p>
+				<div id="section-results-capacity"></div>
+				<div id="section-results-transfers"></div>
+			</div>
+
+			<div class="content">
+				<h3 class="title is-3">Admission Targets</h3>
+				<div id="admission-sims-icu-table-container" style="margin-bottom: 25px;">
+					<b>ICU Admissions (Daily Average)</b>
+				</div>
+				<div id="admission-sims-acute-table-container">
+					<b>Acute Admissions (Daily Average)</b>
+				</div>
+			</div>
+
+		</div>
+
+	</section>
+
+	<script src="https://unpkg.com/jquery@3.5.1/dist/jquery.min.js"></script>
+
+	<script src="https://unpkg.com/d3@6.3.1/dist/d3.min.js"></script>
+	<script src="https://unpkg.com/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
+
+	<script type="module" src="/js/occupancyplot.js"></script>
+	<script type="module" src="/js/loadplots.js"></script>
+	<script type="module" src="/js/transfers_sankey.js"></script>
+	<script type="module" src="/js/transfers.js"></script>
+	<script type="module" src="/js/capacity_timeline.js"></script>
+
+	<script type="module" src="/js/report.js"></script>
+
+</body>
+
+</html>
